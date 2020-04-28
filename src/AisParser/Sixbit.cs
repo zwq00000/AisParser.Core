@@ -1,4 +1,5 @@
 using System;
+using System.Text;
 
 namespace AisParser {
     /// <summary>
@@ -8,13 +9,10 @@ namespace AisParser {
     ///     All Rights Reserved
     /// </summary>
     internal class SixbitsExhaustedException : Exception {
-        public SixbitsExhaustedException() {
-        }
+        public SixbitsExhaustedException () { }
 
-        public SixbitsExhaustedException(string str) : base(str) {
-        }
+        public SixbitsExhaustedException (string str) : base (str) { }
     }
-
 
     /// <summary>
     ///     This class's methods are used to extract data from the 6-bit packed
@@ -25,12 +23,12 @@ namespace AisParser {
     ///     it defaults to 0 if not set.
     /// </summary>
     public class Sixbit {
-        private readonly int[] _pow2Mask = {0x00, 0x01, 0x03, 0x07, 0x0F, 0x1F, 0x3F};
+        private readonly int[] _pow2Mask = { 0x00, 0x01, 0x03, 0x07, 0x0F, 0x1F, 0x3F };
 
         /// <summary>
         ///     !&lt; raw 6- bit ASCII data string
         /// </summary>
-        private string _bits;
+        private StringBuilder _bits;
 
         /// <summary>
         ///     !&lt; Index of next character
@@ -57,11 +55,10 @@ namespace AisParser {
         /// </summary>
         public int Length => _bits.Length;
 
-        public Sixbit() :this(string.Empty){
-        }
+        public Sixbit () : this (string.Empty) { }
 
-        public Sixbit(string bits) {
-            _bits = bits;
+        public Sixbit (string bits) {
+            _bits = new StringBuilder (bits);
             _bitsIndex = 0;
             _remainder = 0;
             _remainderLength = 0;
@@ -72,8 +69,8 @@ namespace AisParser {
         ///     Initialize a 6-bit datastream structure
         ///     This function initializes the state of the sixbit parser variables
         /// </summary>
-        public void Init(string bits) {
-            _bits = bits;
+        public void Init (string bits) {
+            _bits = new StringBuilder (bits);
             _bitsIndex = 0;
             _remainder = 0;
             _remainderLength = 0;
@@ -83,15 +80,15 @@ namespace AisParser {
         /// <summary>
         ///     Set the bit padding value
         /// </summary>
-        public void PadBits(int num) {
+        public void PadBits (int num) {
             _padBits = num;
         }
 
         /// <summary>
         ///     Add more bits to the buffer
         /// </summary>
-        public void Add(string bits) {
-            _bits += bits;
+        public void Add (string bits) {
+            _bits.Append (bits);
         }
 
         /// <summary>
@@ -113,14 +110,13 @@ namespace AisParser {
         ///     destination -- Use ais2ascii() instead.
         /// </param>
         /// <exception cref="ArgumentException"></exception>
-        public int Binfrom6Bit(int ascii) {
+        public static int Binfrom6Bit (int ascii) {
             if (ascii < 0x30 || ascii > 0x77 || ascii > 0x57 && ascii < 0x60)
-                throw new SixbitsExhaustedException("Illegal 6-bit ASCII value");
+                throw new SixbitsExhaustedException ("Illegal 6-bit ASCII value");
             if (ascii < 0x60)
                 return (ascii - 0x30) & 0x3F;
             return (ascii - 0x38) & 0x3F;
         }
-
 
         /// <summary>
         ///     Convert a binary value to a 6-bit ASCII value
@@ -132,8 +128,8 @@ namespace AisParser {
         ///     to convert
         ///     @returns 6-bit ASCII
         /// </param>
-        public int BinTo6Bit(int value) {
-            if (value > 0x3F) throw new SixbitsExhaustedException("Value is out of range (0-0x3F)");
+        public static int BinTo6Bit (int value) {
+            if (value > 0x3F) throw new SixbitsExhaustedException ("Value is out of range (0-0x3F)");
             if (value < 0x28)
                 return value + 0x30;
             return value + 0x38;
@@ -152,8 +148,8 @@ namespace AisParser {
         ///     eg. Ship Name, Callsign and Destination.
         /// </param>
         /// <exception cref="ArgumentException">value &gt; 0x3F</exception>
-        public int Ais2Ascii(int value) {
-            if (value > 0x3F) throw new SixbitsExhaustedException("Value is out of range (0-0x3F)");
+        public static int Ais2Ascii (int value) {
+            if (value > 0x3F) throw new SixbitsExhaustedException ("Value is out of range (0-0x3F)");
             if (value < 0x20)
                 return value + 0x40;
             return value;
@@ -168,7 +164,7 @@ namespace AisParser {
         ///     It pulls the bits from the raw 6-bit ASCII as they are needed.
         /// </param>
         /// <exception cref="SixbitsExhaustedException"></exception>
-        public long Get(int numbits) {
+        public long Get (int numbits) {
             long result = 0;
             var fetchBits = numbits;
 
@@ -196,7 +192,7 @@ namespace AisParser {
 
                 // Get the next block of 6 bits from the ASCII string 
                 if (_bitsIndex < _bits.Length) {
-                    _remainder = Binfrom6Bit(_bits[_bitsIndex]);
+                    _remainder = Binfrom6Bit (_bits[_bitsIndex]);
                     _bitsIndex++;
                     if (_bitsIndex == _bits.Length)
                         _remainderLength = 6 - _padBits;
@@ -204,7 +200,7 @@ namespace AisParser {
                         _remainderLength = 6;
                 } else if (fetchBits > 0) {
                     // Ran out of bits
-                    throw new SixbitsExhaustedException("Ran out of bits");
+                    throw new SixbitsExhaustedException ("Ran out of bits");
                 } else {
                     return result;
                 }
@@ -213,23 +209,22 @@ namespace AisParser {
             return result;
         }
 
-
         /// <summary>
         ///     Get an ASCII string from the 6-bit data stream
         /// </summary>
         /// <param name="length"> Number of characters to retrieve </param>
         /// <returns> String of the characters</returns>
-        public string GetString(int length) {
+        public string GetString (int length) {
             var tmpStr = new char[length];
             int len = 0;
             // Get the 6-bit string, convert to ASCII
-            for (var i = 0; i < length; i++){
+            for (var i = 0; i < length; i++) {
                 try {
-                    var c = (char) Ais2Ascii((char) Get(6));
-                    if(c == '@'){
+                    var c = (char) Ais2Ascii ((char) Get (6));
+                    if (c == '@') {
                         //skip '@' char
                         continue;
-                    }else{
+                    } else {
                         tmpStr[i] = c;
                         len++;
                     }
@@ -239,7 +234,7 @@ namespace AisParser {
                 }
             }
 
-            return new string(tmpStr,0,len);
+            return new string (tmpStr, 0, len);
         }
     }
 }

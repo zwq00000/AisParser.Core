@@ -1,10 +1,11 @@
-using System.Collections.Generic;
+锘縰sing System.Collections.Generic;
 using System.IO;
 using System.Net.Sockets;
 using Xunit;
 
-namespace AisParser.Tests {
-    public class test_aisparser : TestBase {
+namespace AisParser.Tests
+{
+    public class AisparserTests : TestBase {
 
         static void test_sixbit(Sixbit ais_sixbit) {
             int msgid;
@@ -46,7 +47,7 @@ namespace AisParser.Tests {
         }
 
         private StreamReader CreateReader() {
-            //挪威 开放AIS数据 https://kystverket.no/Maritime-tjenester/Meldings--og-informasjonstjenester/AIS/Brukartilgang-til-AIS-Norge/
+            //鎸▉ 寮�鏀続IS鏁版嵁 https://kystverket.no/Maritime-tjenester/Meldings--og-informasjonstjenester/AIS/Brukartilgang-til-AIS-Norge/
             var client = new TcpClient();
             client.Connect("153.44.253.27", 5631);
             return new StreamReader(client.GetStream());

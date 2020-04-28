@@ -8,11 +8,11 @@
         private long _latitude;
         private long _longitude;
 
-        public Position() { }
+        public Position () { }
 
-        public Position(long longitude, long latitude) {
-            this._longitude = longitude;
-            this._latitude = latitude;
+        public Position (long longitude, long latitude) {
+            this.Longitude = longitude;
+            this.Latitude = latitude;
         }
 
         public long Longitude {
@@ -45,8 +45,16 @@
 
         /// <summary>Returns a string that represents the current object.</summary>
         /// <returns>A string that represents the current object.</returns>
-        public override string ToString() {
-            return $"{{lat:{Latitude/ 1e6},lng:{Longitude/ 1e6}}}";
+        public override string ToString () {
+            return $"{{lng:{Longitude/ 600000d},lat:{Latitude/ 600000d}}}";
+        }
+
+        /// <summary>
+        /// Get Coordinates [longitude,latitude]
+        /// </summary>
+        /// <returns></returns>
+        public double[] ToCoordinates () {
+            return new double[] { Longitude / 600000d, Latitude / 600000d };
         }
 
         #endregion
