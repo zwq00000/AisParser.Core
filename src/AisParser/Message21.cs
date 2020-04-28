@@ -117,10 +117,7 @@
             Name = sixState.GetString(20);
             PosAcc = (int) sixState.Get(1);
 
-            Pos = new Position {
-                Longitude = sixState.Get(28),
-                Latitude = sixState.Get(27)
-            };
+            Pos = Position.FromAis(longitude:sixState.Get(28),latitude:sixState.Get(27));
 
             DimBow = (int) sixState.Get(9);
             DimStern = (int) sixState.Get(9);

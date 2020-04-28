@@ -4,11 +4,10 @@
     ///     Standard Class B equipment position report
     /// </summary>
     public sealed class Message18 : Messages {
-        public Message18():base(18) {
-		}
+        public Message18 () : base (18) { }
 
-		public Message18(Sixbit sixbit):this(){
-			this.Parse(sixbit);
+        public Message18 (Sixbit sixbit) : this () {
+            this.Parse (sixbit);
         }
 
         /// <summary>
@@ -100,36 +99,37 @@
         /// <param name="sixState"></param>
         /// <exception cref="SixbitsExhaustedException"></exception>
         /// <exception cref="AisMessageException"></exception>
-        public override void Parse(Sixbit sixState) {
-            if (sixState.BitLength!= 168) throw new AisMessageException("Message 18 wrong length");
+        public override void Parse (Sixbit sixState) {
+            if (sixState.BitLength != 168) throw new AisMessageException ("Message 18 wrong length");
 
-            base.Parse(sixState);
+            base.Parse (sixState);
 
-            Regional1 = (int) sixState.Get(8);
-            Sog = (int) sixState.Get(10);
-            PosAcc = (int) sixState.Get(1);
+            Regional1 = (int) sixState.Get (8);
+            Sog = (int) sixState.Get (10);
+            PosAcc = (int) sixState.Get (1);
 
-            Pos = new Position();
-            Pos.Longitude = sixState.Get(28);
-            Pos.Latitude = sixState.Get(27);
+            Pos = Position.FromAis (
+                longitude: sixState.Get (28),
+                latitude: sixState.Get (27)
+            );
 
-            Cog = (int) sixState.Get(12);
-            TrueHeading = (int) sixState.Get(9);
-            UtcSec = (int) sixState.Get(6);
-            Regional2 = (int) sixState.Get(2);
-            UnitFlag = (int) sixState.Get(1);
-            DisplayFlag = (int) sixState.Get(1);
-            DscFlag = (int) sixState.Get(1);
-            BandFlag = (int) sixState.Get(1);
-            Msg22Flag = (int) sixState.Get(1);
-            ModeFlag = (int) sixState.Get(1);
-            Raim = (int) sixState.Get(1);
-            CommState = (int) sixState.Get(1);
+            Cog = (int) sixState.Get (12);
+            TrueHeading = (int) sixState.Get (9);
+            UtcSec = (int) sixState.Get (6);
+            Regional2 = (int) sixState.Get (2);
+            UnitFlag = (int) sixState.Get (1);
+            DisplayFlag = (int) sixState.Get (1);
+            DscFlag = (int) sixState.Get (1);
+            BandFlag = (int) sixState.Get (1);
+            Msg22Flag = (int) sixState.Get (1);
+            ModeFlag = (int) sixState.Get (1);
+            Raim = (int) sixState.Get (1);
+            CommState = (int) sixState.Get (1);
 
             if (CommState == 0)
-                SotdmaState = new Sotdma(sixState);
+                SotdmaState = new Sotdma (sixState);
             else
-                ItdmaState = new Itdma(sixState);
+                ItdmaState = new Itdma (sixState);
         }
     }
 }

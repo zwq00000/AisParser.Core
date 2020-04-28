@@ -88,10 +88,7 @@
             UtcSecond = (int) sixState.Get(6);
             PosAcc = (int) sixState.Get(1);
 
-            Pos = new Position {
-                Longitude = sixState.Get(28),
-                Latitude = sixState.Get(27)
-            };
+            Pos = Position.FromAis(longitude:sixState.Get(28),latitude:sixState.Get(27));
 
             PosType = (int) sixState.Get(4);
             Spare = (int) sixState.Get(10);

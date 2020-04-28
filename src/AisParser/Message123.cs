@@ -95,16 +95,13 @@ namespace AisParser {
             Sog = (int) sixState.Get(10);
             PosAcc = (int) sixState.Get(1);
 
-            Pos = new Position {
-                Longitude = sixState.Get(28),
-                Latitude = sixState.Get(27)
-            };
+            Pos = Position.FromAis(longitude:sixState.Get(28),latitude:sixState.Get(27));
 
             Cog = (int) sixState.Get(12);
             TrueHeading = (int) sixState.Get(9);
             UtcSec = (int) sixState.Get(6);
-            Regional = (int) sixState.Get(4);
-            Spare = (int) sixState.Get(1);
+            Regional = (int) sixState.Get(2);
+            Spare = (int) sixState.Get(3);
             Raim = (int) sixState.Get(1);
             SyncState = (int) sixState.Get(2);
         }

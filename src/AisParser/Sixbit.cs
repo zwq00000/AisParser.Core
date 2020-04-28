@@ -1,4 +1,5 @@
 using System;
+using System.Runtime.CompilerServices;
 using System.Text;
 
 namespace AisParser {
@@ -110,7 +111,8 @@ namespace AisParser {
         ///     destination -- Use ais2ascii() instead.
         /// </param>
         /// <exception cref="ArgumentException"></exception>
-        public static int Binfrom6Bit (int ascii) {
+        [MethodImpl (MethodImplOptions.AggressiveInlining)]
+        private static int Binfrom6Bit (int ascii) {
             if (ascii < 0x30 || ascii > 0x77 || ascii > 0x57 && ascii < 0x60)
                 throw new SixbitsExhaustedException ("Illegal 6-bit ASCII value");
             if (ascii < 0x60)
@@ -128,7 +130,8 @@ namespace AisParser {
         ///     to convert
         ///     @returns 6-bit ASCII
         /// </param>
-        public static int BinTo6Bit (int value) {
+        [MethodImpl (MethodImplOptions.AggressiveInlining)]
+        private static int BinTo6Bit (int value) {
             if (value > 0x3F) throw new SixbitsExhaustedException ("Value is out of range (0-0x3F)");
             if (value < 0x28)
                 return value + 0x30;
@@ -148,7 +151,8 @@ namespace AisParser {
         ///     eg. Ship Name, Callsign and Destination.
         /// </param>
         /// <exception cref="ArgumentException">value &gt; 0x3F</exception>
-        public static int Ais2Ascii (int value) {
+        [MethodImpl (MethodImplOptions.AggressiveInlining)]
+        private static int Ais2Ascii (int value) {
             if (value > 0x3F) throw new SixbitsExhaustedException ("Value is out of range (0-0x3F)");
             if (value < 0x20)
                 return value + 0x40;
