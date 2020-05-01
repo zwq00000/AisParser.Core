@@ -4,11 +4,10 @@
     ///     Base Station Report
     /// </summary>
     public sealed class Message4 : Messages {
-        public Message4():base(4) {
-		}
+        public Message4 () : base (4) { }
 
-		public Message4(Sixbit sixbit):this(){
-			this.Parse(sixbit);
+        public Message4 (Sixbit sixbit) : this () {
+            this.Parse (sixbit);
         }
 
         /// <summary>
@@ -87,29 +86,30 @@
         /// <param name="sixState"></param>
         /// <exception cref="SixbitsExhaustedException"></exception>
         /// <exception cref="AisMessageException"></exception>
-        public override void Parse(Sixbit sixState) {
-            if (sixState.BitLength!= 168) throw new AisMessageException("Message 5 wrong length");
+        public override void Parse (Sixbit sixState) {
+            if (sixState.BitLength != 168) throw new AisMessageException ("Message 4 wrong length");
 
-            base.Parse(sixState);
+            base.Parse (sixState);
 
-            UtcYear = (int) sixState.Get(14);
-            UtcMonth = (int) sixState.Get(4);
-            UtcDay = (int) sixState.Get(5);
-            UtcHour = (int) sixState.Get(5);
-            UtcMinute = (int) sixState.Get(6);
-            UtcSecond = (int) sixState.Get(6);
-            PosAcc = (int) sixState.Get(1);
+            UtcYear = (int) sixState.Get (14);
+            UtcMonth = (int) sixState.Get (4);
+            UtcDay = (int) sixState.Get (5);
+            UtcHour = (int) sixState.Get (5);
+            UtcMinute = (int) sixState.Get (6);
+            UtcSecond = (int) sixState.Get (6);
+            PosAcc = (int) sixState.Get (1);
 
-            Pos = new Position();
-            Pos.Longitude = sixState.Get(28);
-            Pos.Latitude = sixState.Get(27);
+            Pos = Position.FromAis (
+                longitude: sixState.Get (28),
+                latitude: sixState.Get (27)
+            );
 
-            PosType = (int) sixState.Get(4);
-            Spare = (int) sixState.Get(10);
-            Raim = (int) sixState.Get(1);
-            SyncState = (int) sixState.Get(2);
-            SlotTimeout = (int) sixState.Get(3);
-            SubMessage = (int) sixState.Get(14);
+            PosType = (int) sixState.Get (4);
+            Spare = (int) sixState.Get (10);
+            Raim = (int) sixState.Get (1);
+            SyncState = (int) sixState.Get (2);
+            SlotTimeout = (int) sixState.Get (3);
+            SubMessage = (int) sixState.Get (14);
         }
     }
 }

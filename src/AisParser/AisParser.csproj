@@ -8,12 +8,12 @@
     <Authors>ZhaoWeiQiang&lt;zwq00000@gmail.com&gt;</Authors>
     <PackageId>AisParser.Core</PackageId>
     <Product>AIS Parser SDK for .Net Core</Product>
-    <Description>source from https://github.com/bcl/aisparser ,add .net stadard2.0 version</Description>
+    <Description>source from https://github.com/bcl/aisparser ,add .net stadard1.6 version</Description>
     <Copyright>zwq00000@hotmail.com</Copyright>
     <PackageTags>AIS;NetStandard</PackageTags>
     <RepositoryType>git</RepositoryType>
     <Company>XiGe Tech CO.</Company>
-    <RepositoryUrl>https://github.com/zwq00000/aisparser</RepositoryUrl>
+    <RepositoryUrl>https://github.com/zwq00000/AisParser.Core</RepositoryUrl>
   </PropertyGroup>
   <PropertyGroup>
     <GenerateDocumentationFile>true</GenerateDocumentationFile>

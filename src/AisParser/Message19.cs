@@ -117,10 +117,7 @@
             Sog = (int) sixState.Get(10);
             PosAcc = (int) sixState.Get(1);
 
-            Pos = new Position {
-                Longitude = sixState.Get(28),
-                Latitude = sixState.Get(27)
-            };
+            Pos = Position.FromAis(longitude:sixState.Get(28),latitude:sixState.Get(27));
 
             Cog = (int) sixState.Get(12);
             TrueHeading = (int) sixState.Get(9);

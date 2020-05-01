@@ -1,7 +1,7 @@
 using System;
 
 namespace AisParser {
-    internal class AisMessageException : Exception {
+    public class AisMessageException : Exception {
         public AisMessageException() {
         }
 

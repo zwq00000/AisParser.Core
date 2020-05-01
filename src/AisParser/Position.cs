@@ -8,45 +8,60 @@
         private long _latitude;
         private long _longitude;
 
-        public Position() { }
+        //public Position () { }
 
-        public Position(long longitude, long latitude) {
-            this._longitude = longitude;
-            this._latitude = latitude;
+        // public Position (long longitude, long latitude) {
+        //     this.Longitude = longitude;
+        //     this.Latitude = latitude;
+        // }
+
+        public Position (double longitude, double latitude) {
+            this.Longitude = longitude;
+            this.Latitude = latitude;
         }
 
-        public long Longitude {
-            get => _longitude;
-            set {
-                // Convert longitude to signed number 
-                if (value >= 0x8000000) {
-                    _longitude = 0x10000000 - value;
-                    _longitude *= -1;
-                } else {
-                    _longitude = value;
-                }
+        private static long FixLongitude (long value) {
+            // Convert longitude to signed number 
+            if (value >= 0x8000000) {
+                return -(0x10000000 - value);
+            } else {
+                return value;
             }
         }
 
-        public long Latitude {
-            get => _latitude;
-            set {
-                // Convert latitude to signed number 
-                if (value >= 0x4000000) {
-                    _latitude = 0x8000000 - value;
-                    _latitude *= -1;
-                } else {
-                    _latitude = value;
-                }
+        private static long FixLatitude (long value) {
+            // Convert latitude to signed number 
+            if (value >= 0x4000000) {
+                return -(0x8000000 - value);
+            } else {
+                return value;
             }
+        }
+
+        public double Longitude { get; }
+
+        public double Latitude { get; }
+
+        public static Position FromAis (long longitude, long latitude) {
+            var lng = FixLongitude (longitude) / 600000d;
+            var lat = FixLatitude (latitude) / 600000d;
+            return new Position (lng, lat);
         }
 
         #region Overrides of Object
 
         /// <summary>Returns a string that represents the current object.</summary>
         /// <returns>A string that represents the current object.</returns>
-        public override string ToString() {
-            return $"{{lat:{Latitude/ 1e6},lng:{Longitude/ 1e6}}}";
+        public override string ToString () {
+            return $"{{lng:{Longitude},lat:{Latitude}";
+        }
+
+        /// <summary>
+        /// Get Coordinates [longitude,latitude]
+        /// </summary>
+        /// <returns></returns>
+        public double[] ToCoordinates () {
+            return new double[] { Longitude, Latitude };
         }
 
         #endregion

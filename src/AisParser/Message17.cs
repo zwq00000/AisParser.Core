@@ -4,11 +4,10 @@
     ///     DGNSS Broadcast binary message
     /// </summary>
     public sealed class Message17 : Messages {
-        public Message17():base(17) {
-		}
+        public Message17 () : base (17) { }
 
-		public Message17(Sixbit sixbit):this(){
-			this.Parse(sixbit);
+        public Message17 (Sixbit sixbit) : this () {
+            this.Parse (sixbit);
         }
 
         /// <summary>
@@ -67,25 +66,23 @@
         /// <param name="sixState"></param>
         /// <exception cref="SixbitsExhaustedException"></exception>
         /// <exception cref="AisMessageException"></exception>
-        public override void Parse(Sixbit sixState) {
+        public override void Parse (Sixbit sixState) {
             var length = sixState.BitLength;
-            if (length < 80 || length > 816) throw new AisMessageException("Message 17 wrong length");
+            if (length < 80 || length > 816) throw new AisMessageException ("Message 17 wrong length");
 
-            base.Parse(sixState);
+            base.Parse (sixState);
 
-            Spare1 = (int) sixState.Get(2);
+            Spare1 = (int) sixState.Get (2);
 
-            Pos = new Position();
-            Pos.Longitude = sixState.Get(18) * 10;
-            Pos.Latitude = sixState.Get(17) * 10;
+            Pos = Position.FromAis (longitude: sixState.Get (18) * 10, latitude: sixState.Get (17) * 10);
 
-            Spare2 = (int) sixState.Get(5);
-            MsgType = (int) sixState.Get(6);
-            StationId = (int) sixState.Get(10);
-            ZCount = (int) sixState.Get(13);
-            SeqNum = (int) sixState.Get(3);
-            NumWords = (int) sixState.Get(5);
-            Health = (int) sixState.Get(3);
+            Spare2 = (int) sixState.Get (5);
+            MsgType = (int) sixState.Get (6);
+            StationId = (int) sixState.Get (10);
+            ZCount = (int) sixState.Get (13);
+            SeqNum = (int) sixState.Get (3);
+            NumWords = (int) sixState.Get (5);
+            Health = (int) sixState.Get (3);
 
             Data = sixState;
         }
