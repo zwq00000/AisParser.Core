@@ -21,9 +21,8 @@ namespace AisParser.Tests
 
 
         static void test_nmea() {
-            Nmea nmea_message = new Nmea();
-            nmea_message.Init("!AIVDM,1,1,,B,19NS7Sp02wo?HETKA2K6mUM20<L=,0*27\r\n");
-            Assert.True(nmea_message.CheckChecksum() == 0, "Checksum is BAD");
+            var msg = "!AIVDM,1,1,,B,19NS7Sp02wo?HETKA2K6mUM20<L=,0*27\r\n";
+            Assert.True(Nmea.CheckChecksum(msg) == 0, "Checksum is BAD");
         }
 
         [Fact]

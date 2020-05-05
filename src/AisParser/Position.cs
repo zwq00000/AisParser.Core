@@ -5,9 +5,6 @@
     ///     and provide helper methods for other formats
     /// </summary>
     public class Position {
-        private long _latitude;
-        private long _longitude;
-
         //public Position () { }
 
         // public Position (long longitude, long latitude) {

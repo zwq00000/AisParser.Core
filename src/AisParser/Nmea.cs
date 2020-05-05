@@ -8,7 +8,7 @@ namespace AisParser {
         public StartNotFoundException (string str) : base (str) { }
     }
 
-    internal class IllegalNmeaCharacterException : Exception {
+    internal partial class IllegalNmeaCharacterException : Exception {
         public IllegalNmeaCharacterException () { }
 
         public IllegalNmeaCharacterException (string str) : base (str) { }
@@ -27,7 +27,7 @@ namespace AisParser {
         ///     Initialize it with a NMEA message string
         /// </summary>
         /// <param name="msg"></param>
-        public void Init (string msg) {
+        private void Init (string msg) {
             _msg = msg;
         }
 
@@ -39,7 +39,7 @@ namespace AisParser {
         /// <param name="msg"></param>
         /// <param name="offset">field start pos</param>
         /// <returns></returns>
-        public static string NextField (string msg, int offset = 0) {
+        private static string NextField (string msg, int offset = 0) {
             for (var i = offset; i < msg.Length; i++) {
                 var c = msg[i];
                 if (c == ',' || c == '*') {
@@ -143,7 +143,7 @@ namespace AisParser {
         /// </summary>
         /// <returns>index of the start character</returns>
         /// <exception cref="StartNotFoundException"></exception>
-        public int FindStart () {
+        private int FindStart () {
             var i = 0;
             foreach (var x in _msg) {
                 if (x == '!' || x == '$') return i;
@@ -161,7 +161,7 @@ namespace AisParser {
         /// </summary>
         /// <exception cref="StartNotFoundException"></exception>
         /// <exception cref="IllegalNmeaCharacterException"></exception>
-        public void CalculateChecksum () {
+        private void CalculateChecksum () {
             // Find start of sentence, after a '!' or '$'
             var ptr = FindStart () + 1;
 
