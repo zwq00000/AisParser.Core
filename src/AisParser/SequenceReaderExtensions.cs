@@ -1,9 +1,10 @@
 using System;
 using System.Buffers;
+using System.Collections.Generic;
 using System.Runtime.CompilerServices;
 
 namespace AisParser {
-    internal static class SequenceReaderExtensions {
+    public static class SequenceReaderExtensions {
 
         /// <summary>
         /// 异或计算

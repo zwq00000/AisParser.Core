@@ -19,7 +19,7 @@ namespace AisParser {
     ///     Provides methods for finding the start of a NMEA message,
     ///     and calculating the checksum of the message.
     /// </summary>
-    public class Nmea {
+    public partial class Nmea {
         private int _checksum;
         private string _msg;
 

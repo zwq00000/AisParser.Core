@@ -61,12 +61,19 @@ namespace AisParser {
             '\r', (byte)
             '\n'
         };
-        public void Parse (ref ReadOnlySequence<byte> buffer) {
+        public VdmStatus Parse (ref ReadOnlySequence<byte> buffer) {
             var reader = new SequenceReader<byte> (buffer);
+
             if (reader.TryReadTo (out var line, NewLine)) {
-                
+                if (Nmea.CalculateChecksum (ref line) != 0) {
+                    return VdmStatus.ChecksumFailed;
+                }
+                //var parts = line.Split ((byte) ',');
             }
+
+            return VdmStatus.Complete;
         }
+
 
         /// <summary>
         ///     Assemble AIVDM/VDO sentences

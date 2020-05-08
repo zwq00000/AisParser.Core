@@ -70,7 +70,7 @@ namespace AisParser {
         ///     Initialize a 6-bit datastream structure
         ///     This function initializes the state of the sixbit parser variables
         /// </summary>
-        public void Init (string bits) {
+        private void Init (string bits) {
             _bits = new StringBuilder (bits);
             _bitsIndex = 0;
             _remainder = 0;
