@@ -24,7 +24,7 @@ namespace AisParser {
     ///     it defaults to 0 if not set.
     /// </summary>
     public class Sixbit {
-        private readonly int[] _pow2Mask = { 0x00, 0x01, 0x03, 0x07, 0x0F, 0x1F, 0x3F };
+        private static readonly int[] _pow2Mask = { 0x00, 0x01, 0x03, 0x07, 0x0F, 0x1F, 0x3F };
 
         /// <summary>
         ///     !&lt; raw 6- bit ASCII data string
@@ -59,18 +59,6 @@ namespace AisParser {
         public Sixbit () : this (string.Empty) { }
 
         public Sixbit (string bits) {
-            _bits = new StringBuilder (bits);
-            _bitsIndex = 0;
-            _remainder = 0;
-            _remainderLength = 0;
-            _padBits = 0;
-        }
-
-        /// <summary>
-        ///     Initialize a 6-bit datastream structure
-        ///     This function initializes the state of the sixbit parser variables
-        /// </summary>
-        private void Init (string bits) {
             _bits = new StringBuilder (bits);
             _bitsIndex = 0;
             _remainder = 0;
@@ -152,10 +140,10 @@ namespace AisParser {
         /// </param>
         /// <exception cref="ArgumentException">value &gt; 0x3F</exception>
         [MethodImpl (MethodImplOptions.AggressiveInlining)]
-        private static int Ais2Ascii (int value) {
+        private static char Ais2Ascii (char value) {
             if (value > 0x3F) throw new SixbitsExhaustedException ("Value is out of range (0-0x3F)");
             if (value < 0x20)
-                return value + 0x40;
+                return (char)(value + 0x40);
             return value;
         }
 
@@ -224,7 +212,7 @@ namespace AisParser {
             // Get the 6-bit string, convert to ASCII
             for (var i = 0; i < length; i++) {
                 try {
-                    var c = (char) Ais2Ascii ((char) Get (6));
+                    var c = Ais2Ascii ((char) Get (6));
                     if (c == '@') {
                         //skip '@' char
                         continue;

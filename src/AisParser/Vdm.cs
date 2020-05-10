@@ -136,7 +136,7 @@ namespace AisParser {
                     Total = 0;
                     Sequence = 0;
                     Num = 0;
-                    return (VdmStatus)5;
+                    return VdmStatus.OutofSequence; //5
                     //throw new VDMSentenceException("Out of sequence sentence");
                 }
 
@@ -165,11 +165,11 @@ namespace AisParser {
                 // Adjust bit count
                 SixState.PadBits(int.Parse(fields[6]));
                 // Found a complete packet
-                return 0;
+                return VdmStatus.Complete; // 0
             }
 
             // No complete message yet
-            return (VdmStatus)1;
+            return VdmStatus.Incomplete;//)1
         }
     }
 
