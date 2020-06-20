@@ -7,24 +7,24 @@
         public Message8():base(8) {
 		}
 
-		public Message8(Sixbit sixbit):this(){
+		public Message8(ISixbit sixbit):this(){
 			this.Parse(sixbit);
         }
 
         /// <summary>
         ///     2 bits   : Spare
         /// </summary>
-        public int Spare { get; private set; }
+        public int Spare { get; internal set; }
 
         /// <summary>
         ///     16 bits  : Application ID
         /// </summary>
-        public int AppId { get; private set; }
+        public int AppId { get; internal set; }
 
         /// <summary>
         ///     952 bits : Data payload
         /// </summary>
-        public Sixbit Data { get; private set; }
+        public ISixbit Data { get; internal set; }
 
         /// <summary>
         ///     Subclasses need to override with their own parsing method
@@ -32,7 +32,7 @@
         /// <param name="sixState"></param>
         /// <exception cref="SixbitsExhaustedException"></exception>
         /// <exception cref="AisMessageException"></exception>
-        public override void Parse(Sixbit sixState) {
+        public override void Parse(ISixbit sixState) {
             var length = sixState.BitLength;
             if (length < 56 || length > 1008) throw new AisMessageException("Message 8 wrong length");
 

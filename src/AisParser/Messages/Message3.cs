@@ -7,28 +7,28 @@
         public Message3():base(3) {
 		}
 
-		public Message3(Sixbit sixbit):this(){
+		public Message3(ISixbit sixbit):this(){
 			this.Parse(sixbit);
         }
 
         /// <summary>
         ///     13 bits : ITDMA Slot Increment
         /// </summary>
-        public int SlotIncrement { get; private set; }
+        public int SlotIncrement { get; internal set; }
 
         /// <summary>
         ///     3 bits  : ITDMA Number of Slots
         /// </summary>
-        public int NumSlots { get; private set; }
+        public int NumSlots { get; internal set; }
 
         /// <summary>
         ///     1 bit   : ITDMA Keep Flag
         /// </summary>
-        public int Keep { get; private set; }
+        public int Keep { get; internal set; }
 
         //JAVA TO C# CONVERTER WARNING: Method 'throws' clauses are not available in .NET:
         //ORIGINAL LINE: public void parse(Sixbit six_state) throws SixbitsExhaustedException, AISMessageException
-        public override void Parse(Sixbit sixState) {
+        public override void Parse(ISixbit sixState) {
             if (sixState.BitLength!= 168) throw new AisMessageException("Message 3 wrong length");
 
             base.Parse(sixState);

@@ -6,24 +6,24 @@
         public Sotdma() {
         }
 
-        internal Sotdma(Sixbit sixState) {
+        internal Sotdma(ISixbit sixState) {
             Parse(sixState);
         }
 
         /// <summary>
         ///     !&lt; 2 bits   : SOTDMA Sync State
         /// </summary>
-        public int SyncState { get; private set; }
+        public int SyncState { get; internal set; }
 
         /// <summary>
         ///     !&lt; 3 bits   : SOTDMA Slot Timeout
         /// </summary>
-        public int SlotTimeout { get; private set; }
+        public int SlotTimeout { get; internal set; }
 
         /// <summary>
         ///     !&lt; 14 bits  : SOTDMA Sub-Messsage
         /// </summary>
-        public int SubMessage { get; private set; }
+        public int SubMessage { get; internal set; }
 
         /// <summary>
         ///     Parse sixbit message
@@ -31,7 +31,7 @@
         /// <param name="sixState"></param>
         /// <exception cref="SixbitsExhaustedException"></exception>
         /// <exception cref="AisMessageException"></exception>
-        public void Parse(Sixbit sixState) {
+        public void Parse(ISixbit sixState) {
             if (sixState.BitLength< 19) throw new AisMessageException("SOTDMA wrong length");
 
             SyncState = (char) sixState.Get(2);

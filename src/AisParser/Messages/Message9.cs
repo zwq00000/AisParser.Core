@@ -7,72 +7,72 @@
         public Message9():base(9) {
 		}
 
-		public Message9(Sixbit sixbit):this(){
+		public Message9(ISixbit sixbit):this(){
 			this.Parse(sixbit);
         }
 
         /// <summary>
         ///     12 bits  : Altitude
         /// </summary>
-        public int Altitude { get; private set; }
+        public int Altitude { get; internal set; }
 
         /// <summary>
         ///     10 bits  : Speed Over Ground
         /// </summary>
-        public int Sog { get; private set; }
+        public int Sog { get; internal set; }
 
         /// <summary>
         ///     1 bit    : Position Accuracy
         /// </summary>
-        public int PosAcc { get; private set; }
+        public int PosAcc { get; internal set; }
 
         /// <summary>
         ///     : Lat/Long 1/100000 minute
         /// </summary>
-        public Position Pos { get; private set; }
+        public Position Pos { get; internal set; }
 
         /// <summary>
         ///     12 bits  : Course Over Ground
         /// </summary>
-        public int Cog { get; private set; }
+        public int Cog { get; internal set; }
 
         /// <summary>
         ///     6 bits   : UTC Seconds
         /// </summary>
-        public int UtcSec { get; private set; }
+        public int UtcSec { get; internal set; }
 
         /// <summary>
         ///     8 bits   : Regional bits
         /// </summary>
-        public int Regional { get; private set; }
+        public int Regional { get; internal set; }
 
         /// <summary>
         ///     1 bit    : DTE flag
         /// </summary>
-        public int Dte { get; private set; }
+        public int Dte { get; internal set; }
 
         /// <summary>
         ///     3 bits   : Spare
         /// </summary>
-        public int Spare { get; private set; }
+        public int Spare { get; internal set; }
 
         /// <summary>
         ///     1 bit    : Assigned mode flag
         /// </summary>
-        public int Assigned { get; private set; }
+        public int Assigned { get; internal set; }
 
         /// <summary>
         ///     1 bit    : RAIM flag
         /// </summary>
-        public int Raim { get; private set; }
+        public int Raim { get; internal set; }
 
         /// <summary>
         ///     1 bit    : Comm State Flag
         /// </summary>
-        public int CommState { get; private set; }
+        public int CommState { get; internal set; }
 
-        public Sotdma SotdmaState { get; private set; }
-        public Itdma ItdmaState { get; private set; }
+        public Sotdma SotdmaState { get; internal set; }
+        public Itdma ItdmaState { get; internal set; }
 
         /// <summary>
         ///     Subclasses need to override with their own parsing method
@@ -80,7 +80,7 @@
         /// <param name="sixState"></param>
         /// <exception cref="SixbitsExhaustedException"></exception>
         /// <exception cref="AisMessageException"></exception>
-        public override void Parse(Sixbit sixState) {
+        public override void Parse(ISixbit sixState) {
             if (sixState.BitLength!= 168) throw new AisMessageException("Message 9 wrong length");
 
             base.Parse(sixState);

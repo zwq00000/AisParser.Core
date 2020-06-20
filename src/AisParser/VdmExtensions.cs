@@ -1,3 +1,6 @@
+using System.Text;
+using System.Buffers;
+
 namespace AisParser {
     public static class VdmExtensions {
 

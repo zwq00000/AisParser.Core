@@ -191,7 +191,7 @@ namespace AisParser.Tests {
             AssertEquals("spare", 0, msg.Spare);
             AssertEquals("app_id", 23481, msg.AppId);
 
-            Sixbit data = msg.Data;
+            ISixbit data = msg.Data;
             AssertEquals("data length", 568, data.BitLength);
 
             // Here is where the payload would be parsed, if we knew how...	

@@ -7,24 +7,24 @@
         public Message10():base(10) {
 		}
 
-		public Message10(Sixbit sixbit):this(){
+		public Message10(ISixbit sixbit):this(){
 			this.Parse(sixbit);
         }
 
         /// <summary>
         ///     30 bits  : Destination MMSI
         /// </summary>
-        public long Destination { get; private set; }
+        public long Destination { get; internal set; }
 
         /// <summary>
         ///     2 bits   : Spare
         /// </summary>
-        public int Spare1 { get; private set; }
+        public int Spare1 { get; internal set; }
 
         /// <summary>
         ///     2 bits   : Spare
         /// </summary>
-        public int Spare2 { get; private set; }
+        public int Spare2 { get; internal set; }
 
 
         /// <summary>
@@ -33,7 +33,7 @@
         /// <param name="sixState"></param>
         /// <exception cref="SixbitsExhaustedException"></exception>
         /// <exception cref="AisMessageException"></exception>
-        public override void Parse(Sixbit sixState) {
+        public override void Parse(ISixbit sixState) {
             if (sixState.BitLength!= 72) throw new AisMessageException("Message 10 wrong length");
 
             base.Parse(sixState);

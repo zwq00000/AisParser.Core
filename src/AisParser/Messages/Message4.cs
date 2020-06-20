@@ -6,79 +6,79 @@
     public sealed class Message4 : Messages {
         public Message4 () : base (4) { }
 
-        public Message4 (Sixbit sixbit) : this () {
+        public Message4 (ISixbit sixbit) : this () {
             this.Parse (sixbit);
         }
 
         /// <summary>
         ///     14 bits : UTC Year
         /// </summary>
-        public int UtcYear { get; private set; }
+        public int UtcYear { get; internal set; }
 
         /// <summary>
         ///     4 bits  : UTC Month
         /// </summary>
-        public int UtcMonth { get; private set; }
+        public int UtcMonth { get; internal set; }
 
         /// <summary>
         ///     5 bits  : UTC Day
         /// </summary>
-        public int UtcDay { get; private set; }
+        public int UtcDay { get; internal set; }
 
         /// <summary>
         ///     5 bits  : UTC Hour
         /// </summary>
-        public int UtcHour { get; private set; }
+        public int UtcHour { get; internal set; }
 
         /// <summary>
         ///     6 bits  : UTC Minute
         /// </summary>
-        public int UtcMinute { get; private set; }
+        public int UtcMinute { get; internal set; }
 
         /// <summary>
         ///     6 bits  : UTC Second
         /// </summary>
-        public int UtcSecond { get; private set; }
+        public int UtcSecond { get; internal set; }
 
         /// <summary>
         ///     1 bit   : Position Accuracy
         /// </summary>
-        public int PosAcc { get; private set; }
+        public int PosAcc { get; internal set; }
 
         /// <summary>
         ///     : Lat/Long 1/100000 minute
         /// </summary>
-        public Position Pos { get; private set; }
+        public Position Pos { get; internal set; }
 
         /// <summary>
         ///     4 bits  : Type of position fixing device
         /// </summary>
-        public int PosType { get; private set; }
+        public int PosType { get; internal set; }
 
         /// <summary>
         ///     10 bits : Spare
         /// </summary>
-        public int Spare { get; private set; }
+        public int Spare { get; internal set; }
 
         /// <summary>
         ///     1 bit   : RAIM flag
         /// </summary>
-        public int Raim { get; private set; }
+        public int Raim { get; internal set; }
 
         /// <summary>
         ///     2 bits  : SOTDMA sync state
         /// </summary>
-        public int SyncState { get; private set; }
+        public int SyncState { get; internal set; }
 
         /// <summary>
         ///     3 bits  : SOTDMA Slot Timeout
         /// </summary>
-        public int SlotTimeout { get; private set; }
+        public int SlotTimeout { get; internal set; }
 
         /// <summary>
         ///     14 bits : SOTDMA sub-message
         /// </summary>
-        public int SubMessage { get; private set; }
+        public int SubMessage { get; internal set; }
 
         /// <summary>
         ///     Subclasses need to override with their own parsing method
@@ -86,7 +86,7 @@
         /// <param name="sixState"></param>
         /// <exception cref="SixbitsExhaustedException"></exception>
         /// <exception cref="AisMessageException"></exception>
-        public override void Parse (Sixbit sixState) {
+        public override void Parse (ISixbit sixState) {
             if (sixState.BitLength != 168) throw new AisMessageException ("Message 4 wrong length");
 
             base.Parse (sixState);

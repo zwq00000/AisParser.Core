@@ -2,7 +2,8 @@
 using System.Linq;
 using System.Text.RegularExpressions;
 
-namespace AisParser {
+namespace AisParser
+{
     internal class ChecksumFailedException : Exception {
         public ChecksumFailedException() {
         }
@@ -64,7 +65,7 @@ namespace AisParser {
         /// <summary>
         ///     !&lt; sixbit parser state
         /// </summary>
-        public Sixbit SixState { get; private set; }
+        public ISixbit<string> SixState { get; private set; }
 
         /// <summary>
         /// vdm field spliter regex
@@ -148,7 +149,7 @@ namespace AisParser {
                 SixState = new Sixbit();
             }
 
-            Channel = fields[4].FirstOrDefault();//[0];
+            Channel = fields[4][0];
             SixState.Add(fields[5]);
 
             if (total == 0 || Total == num) {
@@ -171,37 +172,5 @@ namespace AisParser {
             // No complete message yet
             return VdmStatus.Incomplete;//)1
         }
-    }
-
-    public enum VdmStatus {
-        /// <summary>
-        ///     Complete packet
-        /// </summary>
-        Complete = 0,
-
-        /// <summary>
-        ///     Incomplete packet
-        /// </summary>
-        Incomplete = 1,
-
-        /// <summary>
-        ///     NMEA 0183 checksum failed
-        /// </summary>
-        ChecksumFailed = 2,
-
-        /// <summary>
-        ///     Not an AIS message
-        /// </summary>
-        NotAisMessage = 3,
-
-        /// <summary>
-        ///     Error with nmea_next_field
-        /// </summary>
-        NmeaNextError = 4,
-
-        /// <summary>
-        ///     - 5 Out of sequence packet
-        /// </summary>
-        OutofSequence = 5
     }
 }

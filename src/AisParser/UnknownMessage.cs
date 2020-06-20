@@ -3,7 +3,7 @@ namespace AisParser {
     /// 未知的 AIS 消息
     /// </summary>
     public class UnknownMessage : Messages {
-        public UnknownMessage (int msgId, Sixbit sixbit) : base (msgId) {
+        public UnknownMessage (int msgId, ISixbit sixbit) : base (msgId) {
             this.Parse (sixbit);
         }
 
@@ -15,7 +15,7 @@ namespace AisParser {
             return base.GetHashCode ();
         }
 
-        public override void Parse (Sixbit sixState) {
+        public override void Parse (ISixbit sixState) {
             base.Parse (sixState);
         }
 

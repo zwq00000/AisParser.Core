@@ -7,7 +7,7 @@
         public Message6():base(6) {
 		}
 
-		public Message6(Sixbit sixbit):this(){
+		public Message6(ISixbit sixbit):this(){
 			this.Parse(sixbit);
         }
 
@@ -17,7 +17,7 @@
         /// <remarks>
         /// 序列编号 0-3:参考附件2的第5.3.1节 
         /// </remarks>
-        public int Sequence { get; private set; }
+        public int Sequence { get; internal set; }
 
         /// <summary>
         /// 30 bits : Destination MMSI
@@ -25,7 +25,7 @@
         /// <remarks>
         /// 目的地台站的MMSI编号 
         /// </remarks>
-        public long Destination { get; private set; }
+        public long Destination { get; internal set; }
 
         /// <summary>
         ///    1 bit : Retransmit
@@ -35,22 +35,22 @@
         /// 0 = 无重发 = 默认值
         /// 1 = 已重发 
         /// </remarks>
-        public bool Retransmit { get; private set; }
+        public bool Retransmit { get; internal set; }
 
         /// <summary>
         ///    1 bit : Spare
         /// </summary>
-        public int Spare { get; private set; }
+        public int Spare { get; internal set; }
 
         /// <summary>
         ///    16 bits : Application ID
         /// </summary>
-        public int AppId { get; private set; }
+        public int AppId { get; internal set; }
 
         /// <summary>
         ///    960 bits : Data payload
         /// </summary>
-        public Sixbit Data { get; private set; }
+        public ISixbit Data { get; internal set; }
 
         /// <summary>
         ///    Subclasses need to override with their own parsing method
@@ -58,7 +58,7 @@
         /// <param name="sixState"></param>
         /// <exception cref="SixbitsExhaustedException"></exception>
         /// <exception cref="AisMessageException"></exception>
-        public override void Parse(Sixbit sixState) {
+        public override void Parse(ISixbit sixState) {
             if (sixState.BitLength< 88 || sixState.BitLength> 1008)
                 throw new AisMessageException("Message 6 wrong length");
 

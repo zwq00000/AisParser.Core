@@ -2,6 +2,7 @@ using System;
 using System.Buffers;
 using System.Collections.Generic;
 using System.Runtime.CompilerServices;
+using System.Text;
 
 namespace AisParser {
     public static class SequenceReaderExtensions {
@@ -113,6 +114,24 @@ namespace AisParser {
                 }
             }
 
+            return false;
+        }
+
+
+        /// <summary>
+        /// 读取到 字符串
+        /// </summary>
+        /// <param name="reader"></param>
+        /// <param name="value"></param>
+        /// <param name="delimiter"></param>
+        /// <param name="advancePastDelimiter"></param>
+        /// <returns></returns>
+        internal static bool TryReadToString(this ref SequenceReader<byte> reader, out string value,byte delimiter,bool advancePastDelimiter = true){
+            if(reader.TryReadTo(out ReadOnlySpan<byte> buf,delimiter,advancePastDelimiter)){
+                value = Encoding.ASCII.GetString(buf);
+                return true;
+            }
+            value = null;
             return false;
         }
     }

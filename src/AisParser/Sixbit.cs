@@ -23,7 +23,7 @@ namespace AisParser {
     ///     Use _padBits() to set the number of padding bits at the end of the message,
     ///     it defaults to 0 if not set.
     /// </summary>
-    public class Sixbit {
+    public partial class Sixbit : ISixbit<string> {
         private static readonly int[] _pow2Mask = { 0x00, 0x01, 0x03, 0x07, 0x0F, 0x1F, 0x3F };
 
         /// <summary>
@@ -143,7 +143,7 @@ namespace AisParser {
         private static char Ais2Ascii (char value) {
             if (value > 0x3F) throw new SixbitsExhaustedException ("Value is out of range (0-0x3F)");
             if (value < 0x20)
-                return (char)(value + 0x40);
+                return (char) (value + 0x40);
             return value;
         }
 
@@ -169,18 +169,19 @@ namespace AisParser {
                         fetchBits -= _remainderLength;
                         _remainder = 0;
                         _remainderLength = 0;
-                    } else {
-                        // remainder is larger than what is needed
-                        //Take the bits from the top of remainder
-                        result = result << fetchBits;
-                        result += _remainder >> (_remainderLength - fetchBits);
-
-                        // Fixup remainder 
-                        _remainderLength -= fetchBits;
-                        _remainder &= _pow2Mask[_remainderLength];
-
-                        return result;
                     }
+                else {
+                    // remainder is larger than what is needed
+                    //Take the bits from the top of remainder
+                    result = result << fetchBits;
+                    result += _remainder >> (_remainderLength - fetchBits);
+
+                    // Fixup remainder 
+                    _remainderLength -= fetchBits;
+                    _remainder &= _pow2Mask[_remainderLength];
+
+                    return result;
+                }
 
                 // Get the next block of 6 bits from the ASCII string 
                 if (_bitsIndex < _bits.Length) {

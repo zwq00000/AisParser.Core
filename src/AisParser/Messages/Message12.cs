@@ -7,34 +7,34 @@
         public Message12():base(12) {
 		}
 
-		public Message12(Sixbit sixbit):this(){
+		public Message12(ISixbit sixbit):this(){
 			this.Parse(sixbit);
         }
 
         /// <summary>
         ///     2 bits   : Sequence
         /// </summary>
-        public int Sequence { get; private set; }
+        public int Sequence { get; internal set; }
 
         /// <summary>
         ///     30 bits  : Destination MMSI
         /// </summary>
-        public long Destination { get; private set; }
+        public long Destination { get; internal set; }
 
         /// <summary>
         ///     1 bit    : Retransmit
         /// </summary>
-        public int Retransmit { get; private set; }
+        public int Retransmit { get; internal set; }
 
         /// <summary>
         ///     1 bit    : Spare
         /// </summary>
-        public int Spare { get; private set; }
+        public int Spare { get; internal set; }
 
         /// <summary>
         ///     936 bits : Message in ASCII
         /// </summary>
-        public string Message { get; private set; }
+        public string Message { get; internal set; }
 
         /// <summary>
         ///     Subclasses need to override with their own parsing method
@@ -42,7 +42,7 @@
         /// <param name="sixState"></param>
         /// <exception cref="SixbitsExhaustedException"></exception>
         /// <exception cref="AisMessageException"></exception>
-        public override void Parse(Sixbit sixState) {
+        public override void Parse(ISixbit sixState) {
             var length = sixState.BitLength;
             if (length < 72 || length > 1008) throw new AisMessageException("Message 12 wrong length");
 

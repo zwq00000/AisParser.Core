@@ -6,59 +6,59 @@
     public sealed class Message23 : Messages {
         public Message23 () : base (23) { }
 
-        public Message23 (Sixbit sixbit) : this () {
+        public Message23 (ISixbit sixbit) : this () {
             this.Parse (sixbit);
         }
 
         /// <summary>
         ///     2 bits   : Spare
         /// </summary>
-        public int Spare1 { get; private set; }
+        public int Spare1 { get; internal set; }
 
         /// <summary>
         ///     : NE Corner Lat/Long in 1/1000 minutes
         /// </summary>
-        public Position NePos { get; private set; }
+        public Position NePos { get; internal set; }
 
         /// <summary>
         ///     : SW Corner Lat/Long in 1/1000 minutes
         /// </summary>
-        public Position SwPos { get; private set; }
+        public Position SwPos { get; internal set; }
 
         /// <summary>
         ///     4 bits   : Station Type
         /// </summary>
-        public int StationType { get; private set; }
+        public int StationType { get; internal set; }
 
         /// <summary>
         ///     8 bits   : Type of Ship and Cargo
         /// </summary>
-        public int ShipType { get; private set; }
+        public int ShipType { get; internal set; }
 
         /// <summary>
         ///     22 bits  : Spare
         /// </summary>
-        public long Spare2 { get; private set; }
+        public long Spare2 { get; internal set; }
 
         /// <summary>
         ///     2 bits   : TX/RX Mode
         /// </summary>
-        public int TxrxMode { get; private set; }
+        public int TxrxMode { get; internal set; }
 
         /// <summary>
         ///     4 bits   : Reporting Interval from IEC 62287 Table 17
         /// </summary>
-        public int ReportInterval { get; private set; }
+        public int ReportInterval { get; internal set; }
 
         /// <summary>
         ///     4 bits   : Quiet Time in Minutes
         /// </summary>
-        public int QuietTime { get; private set; }
+        public int QuietTime { get; internal set; }
 
         /// <summary>
         ///     6 bits   : Spare
         /// </summary>
-        public int Spare3 { get; private set; }
+        public int Spare3 { get; internal set; }
 
         /// <summary>
         ///     Subclasses need to override with their own parsing method
@@ -66,7 +66,7 @@
         /// <param name="sixState"></param>
         /// <exception cref="SixbitsExhaustedException"></exception>
         /// <exception cref="AisMessageException"></exception>
-        public override void Parse (Sixbit sixState) {
+        public override void Parse (ISixbit sixState) {
             if (sixState.BitLength == 168) throw new AisMessageException ("Message 23 wrong length");
 
             base.Parse (sixState);

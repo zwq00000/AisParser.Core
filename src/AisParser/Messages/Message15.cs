@@ -7,74 +7,74 @@
         public Message15():base(15) {
 		}
 
-		public Message15(Sixbit sixbit):this(){
+		public Message15(ISixbit sixbit):this(){
 			this.Parse(sixbit);
         }
 
         /// <summary>
         ///     2 bits   : Spare
         /// </summary>
-        public int Spare1 { get; private set; }
+        public int Spare1 { get; internal set; }
 
         /// <summary>
         ///     30 bits  : Destination MMSI 1
         /// </summary>
-        public long Destid1 { get; private set; }
+        public long Destid1 { get; internal set; }
 
         /// <summary>
         ///     6 bits   : MessageID 1.1
         /// </summary>
-        public int MsgId1_1 { get; private set; }
+        public int MsgId1_1 { get; internal set; }
 
         /// <summary>
         ///     12 bits  : Slot Offset 1.1
         /// </summary>
-        public int Offset1_1 { get; private set; }
+        public int Offset1_1 { get; internal set; }
 
         /// <summary>
         ///     2 bits   : Spare
         /// </summary>
-        public int Spare2 { get; private set; }
+        public int Spare2 { get; internal set; }
 
         /// <summary>
         ///     6 bits   : MessageID 1.2
         /// </summary>
-        public int MsgId1_2 { get; private set; }
+        public int MsgId1_2 { get; internal set; }
 
         /// <summary>
         ///     12 bits  : Slot Offset 1.2
         /// </summary>
-        public int Offset1_2 { get; private set; }
+        public int Offset1_2 { get; internal set; }
 
         /// <summary>
         ///     2 bits   : Spare
         /// </summary>
-        public int Spare3 { get; private set; }
+        public int Spare3 { get; internal set; }
 
         /// <summary>
         ///     30 bits  : Destination MMSI 2
         /// </summary>
-        public long Destid2 { get; private set; }
+        public long Destid2 { get; internal set; }
 
         /// <summary>
         ///     6 bits   : MessageID 2.1
         /// </summary>
-        public int MsgId2_1 { get; private set; }
+        public int MsgId2_1 { get; internal set; }
 
         /// <summary>
         ///     12 bits  : Slot Offset 2.1
         /// </summary>
-        public int Offset2_1 { get; private set; }
+        public int Offset2_1 { get; internal set; }
 
         /// <summary>
         ///     2 bits   : Spare
         /// </summary>
-        public int Spare4 { get; private set; }
+        public int Spare4 { get; internal set; }
 
         /// <summary>
         ///     Number of interrogation requests
         /// </summary>
-        public int NumReqs { get; private set; }
+        public int NumReqs { get; internal set; }
 
         /// <summary>
         ///     Subclasses need to override with their own parsing method
@@ -82,7 +82,7 @@
         /// <param name="sixState"></param>
         /// <exception cref="SixbitsExhaustedException"></exception>
         /// <exception cref="AisMessageException"></exception>
-        public override void Parse(Sixbit sixState) {
+        public override void Parse(ISixbit sixState) {
             var length = sixState.BitLength;
             if (length < 88 || length > 162) throw new AisMessageException("Message 15 wrong length");
             base.Parse(sixState);

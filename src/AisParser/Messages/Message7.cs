@@ -7,59 +7,59 @@
         public Message7():base(7) {
 		}
 
-		public Message7(Sixbit sixbit):this(){
+		public Message7(ISixbit sixbit):this(){
 			this.Parse(sixbit);
         }
 
         /// <summary>
         ///     2 bits   : Spare
         /// </summary>
-        public int Spare { get; private set; }
+        public int Spare { get; internal set; }
 
         /// <summary>
         ///     30 bits  : Destination MMSI 1
         /// </summary>
-        public long Destid1 { get; private set; }
+        public long Destid1 { get; internal set; }
 
         /// <summary>
         ///     2 bits   : Sequence Number 1
         /// </summary>
-        public int Sequence1 { get; private set; }
+        public int Sequence1 { get; internal set; }
 
         /// <summary>
         ///     30 bits  : Destination MMSI 2
         /// </summary>
-        public long Destid2 { get; private set; }
+        public long Destid2 { get; internal set; }
 
         /// <summary>
         ///     2 bits   : Sequence Number 2
         /// </summary>
-        public int Sequence2 { get; private set; }
+        public int Sequence2 { get; internal set; }
 
         /// <summary>
         ///     30 bits  : Destination MMSI 3
         /// </summary>
-        public long Destid3 { get; private set; }
+        public long Destid3 { get; internal set; }
 
         /// <summary>
         ///     2 bits   : Sequence Number 3
         /// </summary>
-        public int Sequence3 { get; private set; }
+        public int Sequence3 { get; internal set; }
 
         /// <summary>
         ///     30 bits  : Destination MMSI 4
         /// </summary>
-        public long Destid4 { get; private set; }
+        public long Destid4 { get; internal set; }
 
         /// <summary>
         ///     2 bits   : Sequence Number 4
         /// </summary>
-        public int Sequence4 { get; private set; }
+        public int Sequence4 { get; internal set; }
 
         /// <summary>
         ///     Number of acks
         /// </summary>
-        public int NumAcks { get; private set; }
+        public int NumAcks { get; internal set; }
 
         /// <summary>
         ///     Subclasses need to override with their own parsing method
@@ -67,7 +67,7 @@
         /// <param name="sixState"></param>
         /// <exception cref="SixbitsExhaustedException"></exception>
         /// <exception cref="AisMessageException"></exception>
-        public override void Parse(Sixbit sixState) {
+        public override void Parse(ISixbit sixState) {
             var length = sixState.BitLength;
             if (length < 72 || length > 168) throw new AisMessageException("Message 7 wrong length");
 

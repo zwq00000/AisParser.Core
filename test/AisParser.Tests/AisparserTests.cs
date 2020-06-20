@@ -7,7 +7,7 @@ namespace AisParser.Tests
 {
     public class AisparserTests : TestBase {
 
-        static void test_sixbit(Sixbit ais_sixbit) {
+        static void test_sixbit(ISixbit ais_sixbit) {
             int msgid;
             long mmsi;
             msgid = (int)ais_sixbit.Get(6);

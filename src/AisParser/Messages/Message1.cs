@@ -7,7 +7,7 @@ namespace AisParser {
         public Message1() : base(1) {
         }
 
-        public Message1(Sixbit sixbit) : this() {
+        public Message1(ISixbit sixbit) : this() {
             this.Parse(sixbit);
         }
 
@@ -15,19 +15,19 @@ namespace AisParser {
         /// <summary>
         ///     3 bits  : SOTDMA Slot Timeout
         /// </summary>
-        public int SlotTimeout { get; private set; }
+        public int SlotTimeout { get; internal set; }
 
         /// <summary>
         ///     14 bits : SOTDMA sub-message
         /// </summary>
-        public int SubMessage { get; private set; }
+        public int SubMessage { get; internal set; }
 
         /// <summary>
         /// </summary>
         /// <param name="sixState"></param>
         /// <exception cref="SixbitsExhaustedException"></exception>
         /// <exception cref="AisMessageException"></exception>
-        public override void Parse(Sixbit sixState) {
+        public override void Parse(ISixbit sixState) {
             if (sixState.BitLength != 168) throw new AisMessageException("Message 1 wrong length");
 
             base.Parse(sixState);

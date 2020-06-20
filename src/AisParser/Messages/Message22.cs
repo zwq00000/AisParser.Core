@@ -6,79 +6,79 @@
     public sealed class Message22 : Messages {
         public Message22 () : base (22) { }
 
-        public Message22 (Sixbit sixbit) : this () {
+        public Message22 (ISixbit sixbit) : this () {
             this.Parse (sixbit);
         }
 
         /// <summary>
         ///     2 bits   : Spare
         /// </summary>
-        public int Spare1 { get; private set; }
+        public int Spare1 { get; internal set; }
 
         /// <summary>
         ///     12 bits  : M.1084 Channel A Frequency
         /// </summary>
-        public int ChannelA { get; private set; }
+        public int ChannelA { get; internal set; }
 
         /// <summary>
         ///     12 bits  : M.1084 Channel B Frequency
         /// </summary>
-        public int ChannelB { get; private set; }
+        public int ChannelB { get; internal set; }
 
         /// <summary>
         ///     4 bits   : TX/RX Mode
         /// </summary>
-        public int TxrxMode { get; private set; }
+        public int TxrxMode { get; internal set; }
 
         /// <summary>
         ///     1 bit    : Power Level
         /// </summary>
-        public int Power { get; private set; }
+        public int Power { get; internal set; }
 
         /// <summary>
         ///     : NE Corner Lat/Long in 1/1000 minutes
         /// </summary>
-        public Position NePos { get; private set; }
+        public Position NePos { get; internal set; }
 
         /// <summary>
         ///     30 bits  : Destination MMSI 1
         /// </summary>
-        public long Addressed1 { get; private set; }
+        public long Addressed1 { get; internal set; }
 
         /// <summary>
         ///     : SW Corner Lat/Long in 1/1000 minutes
         /// </summary>
-        public Position SwPos { get; private set; }
+        public Position SwPos { get; internal set; }
 
         /// <summary>
         ///     30 bits  : Destination MMSI 2
         /// </summary>
-        public long Addressed2 { get; private set; }
+        public long Addressed2 { get; internal set; }
 
         /// <summary>
         ///     1 bit    : Addressed flag
         /// </summary>
-        public int Addressed { get; private set; }
+        public int Addressed { get; internal set; }
 
         /// <summary>
         ///     1 bit    : Channel A Bandwidth
         /// </summary>
-        public int BwA { get; private set; }
+        public int BwA { get; internal set; }
 
         /// <summary>
         ///     1 bit    : Channel B Bandwidth
         /// </summary>
-        public int BwB { get; private set; }
+        public int BwB { get; internal set; }
 
         /// <summary>
         ///     3 bits   : Transitional Zone size
         /// </summary>
-        public int TzSize { get; private set; }
+        public int TzSize { get; internal set; }
 
         /// <summary>
         ///     23 bits  : Spare
         /// </summary>
-        public long Spare2 { get; private set; }
+        public long Spare2 { get; internal set; }
 
         /// <summary>
         ///     Subclasses need to override with their own parsing method
@@ -86,7 +86,7 @@
         /// <param name="sixState"></param>
         /// <exception cref="SixbitsExhaustedException"></exception>
         /// <exception cref="AisMessageException"></exception>
-        public override void Parse (Sixbit sixState) {
+        public override void Parse (ISixbit sixState) {
             if (sixState.BitLength != 168) throw new AisMessageException ("Message 22 wrong length");
 
             base.Parse (sixState);

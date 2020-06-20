@@ -7,54 +7,54 @@
         public Message16():base(16) {
 		}
 
-		public Message16(Sixbit sixbit):this(){
+		public Message16(ISixbit sixbit):this(){
 			this.Parse(sixbit);
         }
 
         /// <summary>
         ///     2 bits   : Spare
         /// </summary>
-        public int Spare1 { get; private set; }
+        public int Spare1 { get; internal set; }
 
         /// <summary>
         ///     30 bits  : Destination MMSI A
         /// </summary>
-        public long DestIdA { get; private set; }
+        public long DestIdA { get; internal set; }
 
         /// <summary>
         ///     12 bits  : Slot Offset A
         /// </summary>
-        public int OffsetA { get; private set; }
+        public int OffsetA { get; internal set; }
 
         /// <summary>
         ///     10 bits  : Increment A
         /// </summary>
-        public int IncrementA { get; private set; }
+        public int IncrementA { get; internal set; }
 
         /// <summary>
         ///     30 bits  : Destination MMSI B
         /// </summary>
-        public long DestIdB { get; private set; }
+        public long DestIdB { get; internal set; }
 
         /// <summary>
         ///     12 bits  : Slot Offset B
         /// </summary>
-        public int OffsetB { get; private set; }
+        public int OffsetB { get; internal set; }
 
         /// <summary>
         ///     10 bits  : Increment B
         /// </summary>
-        public int IncrementB { get; private set; }
+        public int IncrementB { get; internal set; }
 
         /// <summary>
         ///     4 bits   : Spare
         /// </summary>
-        public int Spare2 { get; private set; }
+        public int Spare2 { get; internal set; }
 
         /// <summary>
         ///     Number of commands received
         /// </summary>
-        public int NumCmds { get; private set; }
+        public int NumCmds { get; internal set; }
 
         /// <summary>
         ///     Subclasses need to override with their own parsing method
@@ -62,7 +62,7 @@
         /// <param name="sixState"></param>
         /// <exception cref="SixbitsExhaustedException"></exception>
         /// <exception cref="AisMessageException"></exception>
-        public override void Parse(Sixbit sixState) {
+        public override void Parse(ISixbit sixState) {
             var length = sixState.BitLength;
             if (length < 96 || length > 144) throw new AisMessageException("Message 16 wrong length");
 

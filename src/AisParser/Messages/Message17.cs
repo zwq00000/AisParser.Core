@@ -6,59 +6,59 @@
     public sealed class Message17 : Messages {
         public Message17 () : base (17) { }
 
-        public Message17 (Sixbit sixbit) : this () {
+        public Message17 (ISixbit sixbit) : this () {
             this.Parse (sixbit);
         }
 
         /// <summary>
         ///     2 bits      : Spare
         /// </summary>
-        public int Spare1 { get; private set; }
+        public int Spare1 { get; internal set; }
 
         /// <summary>
         ///     : Lat/Long 1/100000 minute
         /// </summary>
-        public Position Pos { get; private set; }
+        public Position Pos { get; internal set; }
 
         /// <summary>
         ///     5 bits      : Spare
         /// </summary>
-        public int Spare2 { get; private set; }
+        public int Spare2 { get; internal set; }
 
         /// <summary>
         ///     6 bits      : Mesage Type from M.823
         /// </summary>
-        public int MsgType { get; private set; }
+        public int MsgType { get; internal set; }
 
         /// <summary>
         ///     10 bits     : Station ID from M.823
         /// </summary>
-        public int StationId { get; private set; }
+        public int StationId { get; internal set; }
 
         /// <summary>
         ///     13 bits     : Z Count
         /// </summary>
-        public int ZCount { get; private set; }
+        public int ZCount { get; internal set; }
 
         /// <summary>
         ///     3 bits      : Sequence Number
         /// </summary>
-        public int SeqNum { get; private set; }
+        public int SeqNum { get; internal set; }
 
         /// <summary>
         ///     5 bits      : Number of Data Words
         /// </summary>
-        public int NumWords { get; private set; }
+        public int NumWords { get; internal set; }
 
         /// <summary>
         ///     3 bits      : Reference Station Health from M.823
         /// </summary>
-        public int Health { get; private set; }
+        public int Health { get; internal set; }
 
         /// <summary>
         ///     0-696 bits  : Data payload
         /// </summary>
-        public Sixbit Data { get; private set; }
+        public ISixbit Data { get; internal set; }
 
         /// <summary>
         ///     Subclasses need to override with their own parsing method
@@ -66,7 +66,7 @@
         /// <param name="sixState"></param>
         /// <exception cref="SixbitsExhaustedException"></exception>
         /// <exception cref="AisMessageException"></exception>
-        public override void Parse (Sixbit sixState) {
+        public override void Parse (ISixbit sixState) {
             var length = sixState.BitLength;
             if (length < 80 || length > 816) throw new AisMessageException ("Message 17 wrong length");
 

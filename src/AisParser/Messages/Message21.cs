@@ -7,99 +7,99 @@
         public Message21():base(21) {
 		}
 
-		public Message21(Sixbit sixbit):this(){
+		public Message21(ISixbit sixbit):this(){
 			this.Parse(sixbit);
         }
 
         /// <summary>
         ///     5 bits    : Type of AtoN
         /// </summary>
-        public int AtonType { get; private set; }
+        public int AtonType { get; internal set; }
 
         /// <summary>
         ///     120 bits  : Name of AtoN in ASCII
         /// </summary>
-        public string Name { get; private set; }
+        public string Name { get; internal set; }
 
         /// <summary>
         ///     1 bit     : Position Accuracy
         /// </summary>
-        public int PosAcc { get; private set; }
+        public int PosAcc { get; internal set; }
 
         /// <summary>
         ///     : Lat/Long 1/100000 minute
         /// </summary>
-        public Position Pos { get; private set; }
+        public Position Pos { get; internal set; }
 
         /// <summary>
         ///     9 bits    : GPS Ant. Distance from Bow
         /// </summary>
-        public int DimBow { get; private set; }
+        public int DimBow { get; internal set; }
 
         /// <summary>
         ///     9 bits    : GPS Ant. Distance from Stern
         /// </summary>
-        public int DimStern { get; private set; }
+        public int DimStern { get; internal set; }
 
         /// <summary>
         ///     6 bits    : GPS Ant. Distance from Port
         /// </summary>
-        public int DimPort { get; private set; }
+        public int DimPort { get; internal set; }
 
         /// <summary>
         ///     6 bits    : GPS Ant. Distance from Starboard
         /// </summary>
-        public int DimStarboard { get; private set; }
+        public int DimStarboard { get; internal set; }
 
         /// <summary>
         ///     4 bits    : Type of Position Fixing Device
         /// </summary>
-        public int PosType { get; private set; }
+        public int PosType { get; internal set; }
 
         /// <summary>
         ///     6 bits    : UTC Seconds
         /// </summary>
-        public int UtcSec { get; private set; }
+        public int UtcSec { get; internal set; }
 
         /// <summary>
         ///     1 bit     : Off Position Flag
         /// </summary>
-        public int OffPosition { get; private set; }
+        public int OffPosition { get; internal set; }
 
         /// <summary>
         ///     8 bits    : Regional Bits
         /// </summary>
-        public int Regional { get; private set; }
+        public int Regional { get; internal set; }
 
         /// <summary>
         ///     1 bit     : RAIM Flag
         /// </summary>
-        public int Raim { get; private set; }
+        public int Raim { get; internal set; }
 
         /// <summary>
         ///     1 bit     : Virtual/Pseudo AtoN Flag
         /// </summary>
-        public int VirtualRenamed { get; private set; }
+        public int VirtualRenamed { get; internal set; }
 
         /// <summary>
         ///     1 bit     : Assigned Mode Flag
         /// </summary>
-        public int Assigned { get; private set; }
+        public int Assigned { get; internal set; }
 
         /// <summary>
         ///     1 bit     : Spare
         /// </summary>
-        public int Spare1 { get; private set; }
+        public int Spare1 { get; internal set; }
 
         /// <summary>
         ///     0-84 bits : Extended name in ASCII
         /// </summary>
-        public string NameExt { get; private set; }
+        public string NameExt { get; internal set; }
 
         /// <summary>
         ///     0-6 bits  : Spare
         /// </summary>
-        public int Spare2 { get; private set; }
+        public int Spare2 { get; internal set; }
 
         /// <summary>
         ///     Subclasses need to override with their own parsing method
@@ -107,7 +107,7 @@
         /// <param name="sixState"></param>
         /// <exception cref="SixbitsExhaustedException"></exception>
         /// <exception cref="AisMessageException"></exception>
-        public override void Parse(Sixbit sixState) {
+        public override void Parse(ISixbit sixState) {
             var length = sixState.BitLength;
             if (length < 272 || length > 360) throw new AisMessageException("Message 21 wrong length");
 

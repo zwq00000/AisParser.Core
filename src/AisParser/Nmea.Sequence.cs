@@ -82,7 +82,7 @@ namespace AisParser {
         /// </summary>
         /// <returns>index of the start character</returns>
         /// <exception cref="StartNotFoundException"></exception>
-        public int FindStart (ref SequenceReader<byte> reader) {
+        public static int FindStart (ref SequenceReader<byte> reader) {
             if (reader.TryAdvanceToAny (StartChars, true)) {
                 return (int) reader.Consumed;
             }

@@ -4,7 +4,8 @@ using System.Collections;
 using System.Text;
 using Xunit;
 
-namespace AisParser.Tests {
+namespace AisParser.Tests
+{
     public class SixbitTests {
 
         const string payload = "19NS7Sp02wo?HETKA2K6mUM20<L=";
@@ -22,27 +23,42 @@ namespace AisParser.Tests {
 
         [Fact]
         public void TestSpan () {
-            var msgId = new Sixbit ("13GmFd002pwrel@LpMu8L6qn8Vp0").Get(6);
+            const string sentence = "13GmFd002pwrel@LpMu8L6qn8Vp0";
+            var sixState = new Sixbit (sentence);
+            var msgId = sixState.Get(6);
+            var rep = sixState.Get(2);
+            var mmsi = sixState.Get(30);
+            var NavStatus = (int) sixState.Get(4);
+            var Rot = (int) sixState.Get(8);
+            var Sog = (int) sixState.Get(10);
+            var PosAcc = (int) sixState.Get(1);
+            var longitude = sixState.Get(28);
+            var latitude = sixState.Get(27);
+            var Cog = (int) sixState.Get(12);
+            var TrueHeading = (int) sixState.Get(9);
+            var UtcSec = (int) sixState.Get(6);
+            var Regional = (int) sixState.Get(2);
+            var Spare = (int) sixState.Get(3);
+            var Raim = (int) sixState.Get(1);
+            var SyncState = (int) sixState.Get(2);
             Assert.Equal(1,msgId);
-            //Assert.Equal (1, msgId);
-            Assert.Equal ('1', (char) Read (sequence.ToArray (), 0, 6));
-            Assert.Equal('1', Read(ref sequence,0,6));
 
-            Assert.Equal(1, Read(ref sequence,6,2));
-
+            sequence = new ReadOnlySequence<byte> (Encoding.ASCII.GetBytes (sentence));
+            
+            
             var bits = new BitArray (new bool[1]);
 
         }
         private static readonly int[] _pow2Mask = { 0x00, 0x01, 0x03, 0x07, 0x0F, 0x1F, 0x3F };
 
-        private long Read (ref ReadOnlySequence<byte> sixbits, int start, int count) {
+        private long Read (ref ReadOnlySequence<byte> sixbits, int start, int bitCount) {
             var startPos = sixbits.GetPosition (start / 6);
             if (sixbits.TryGet (ref startPos, out var buf, false)) {
                 var offset = start % 6;
-                var len = (int) Math.Round (count / 6f);
+                var len = (int) Math.Round (bitCount / 6f);
                 var span = buf.Span;
                 long result = 0;
-                result = span[0] & _pow2Mask[6 - offset];
+                result = Binfrom6Bit(span[0]) & _pow2Mask[6 - offset];
                 for (int i = 1; i < len; i++) {
                     result += (result << 6) + Binfrom6Bit (span[i]);
                 }
